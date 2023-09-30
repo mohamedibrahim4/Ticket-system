@@ -1,0 +1,246 @@
+﻿@model IEnumerable<Platform_Task__Management_System.Models.Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<label>Total Tasks:</label>  @ViewBag.numberTask </br>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@*<table class="table">*@
+<table data-replace="jtable" id="TaskTable" class="table table-responsive" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">
+    <thead>
+
+        <tr>
+            <!-- Assigning width of first
+            column of each row as 40% -->
+            @*<col style="width: 5%;" />
+
+
+                <col style="width: 5%;" />
+                <col style="width: 5%;" />
+                <col style="width: 5%;" />
+                <col style="width: 40%;" />
+                <col style="width: 10%;" />
+                <col style="width: 10%;" />
+                <col style="width: 10%;" />
+                <col style="width: 10%;" />*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.applicationUser.ProgramName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.facility.FacilityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.software.SoftwareName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TaskRequirements)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeadLineDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.pathAndContents)*@
+                Attachement Files
+            </th>
+            <!--<th>-->
+            @*@Html.DisplayNameFor(model => model.pathAndContents)*@
+            <!--Contents
+            </th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.applicationUser.ProgramName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.facility.FacilityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.software.SoftwareName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td width="200">
+                    @Html.DisplayFor(modelItem => item.TaskRequirements)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeadLineDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.FilePath)*@
+                    @*@foreach (var c in item.pathAndContents=new List<Platform_Task__Management_System.Models.PathAndContent>())
+                        {
+                            @Html.DisplayFor(modelItem => c.FilePath)
+
+                        }*@
+                    @*<img height="150"width="150" src="@ViewBag.NewFilesPath)" asp-append-version="true" />*@
+                    @{
+                        string s = item.FilePath;
+                        if (s != null)
+                        {
+                            string[] separators = new string[] { "!!!" };
+
+                            string[] subs = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                            foreach (var sub in subs)
+                            {
+                                <a href="~/Tasks/DownloadFile?filePath=@sub">DownLoad</a>
+
+                            }
+
+                        }
+                        else
+                        {
+                            <h1>NO DATA</h1>
+                        }
+
+
+
+                    }
+                    @*@for (int i = 0; i < item.FilePath.; i++)
+                        {
+
+                        }*@
+                </td>
+
+
+
+                <!--<td>
+                @Html.DisplayFor(modelItem => item.ContentType)-->
+                @*@foreach (var c in item.pathAndContents = new List<Platform_Task__Management_System.Models.PathAndContent>())
+                    {
+                        @Html.DisplayFor(modelItem => c.ContentType)
+
+                    }*@
+                <!--</td>-->
+                @{
+                    string color = "";
+                    if (item.status.Equals("Complete"))
+                    {
+                        color = "green";
+                    }
+                    else if (item.status.Equals("Pending"))
+                    {
+                        color = "green";
+                    }
+
+
+                    else if (item.status.Equals("InProgress"))
+                    {
+                        color = "blue";
+
+                    }
+                    else if (item.status.Equals("Canceled"))
+                    {
+                        color = "yellow";
+
+                    }
+                }
+                <td>
+
+
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+
+
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit Task", "Edit", new { @class = "btn btn-primary", id = item.TaskID, status = item.status, DeadLineDate = item.DeadLineDate, CreationDate = item.CreationDate }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.TaskID }) |*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.TaskID })*@
+                    <button onClick="DeleteTask(' + @item.TaskID + ')" class="btn btn-danger"> Delete Task</button>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+@*<script>
+
+        function DeleteTask(TaskID) {
+            $.ajax({
+                url: "https://localhost:44343/Tasks/DeleteTask?id=" + TaskID,
+                type: "GET",
+                dataType: "json",
+                success: function () {
+                    console.log("delete success");
+                    window.location.href = "https://localhost:44343/Tasks/Index"
+
+
+                    setTimeout(  swal("Done!", "It was succesfully Deleted!", "success"), 500);
+
+                },
+
+
+                error: function (err) {
+                    alert(err);
+                    swal("Error Deleting!", "Please try again", "error");
+
+                }
+
+            });
+        }
+            //end of DeleteBilDeltials click
+        //$("#TaskTable td").map(function () {
+        //    debugger;
+        //    if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nComplete\n') $(this).css("background-color", "green");
+        //    if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nPending\n') $(this).css("background-color", "orange");
+        //    if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nPending\n') $(this).css("background-color", "blue");
+        //    if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nCanceled\n') $(this).css("background-color", "red");
+        //    else {
+        //        $(this).css("background-color", "none");
+        //    }
+
+        //})
+        applyBGColor();
+        function applyBGColor() {
+            debugger;
+            if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nComplete\n') $('table tr td:nth-child(9)').css("background-color", "green");
+            if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nPending\n') $('table tr td:nth-child(9)').css("background-color", "orange");
+            if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nPending\n') $('table tr td:nth-child(9)').css("background-color", "blue");
+            if ($('table tr td:nth-child(9)').text().replace(/ /g, "") == '\nCanceled\n') $('table tr td:nth-child(9)').css("background-color", "red");
+            //else {
+            //    $(this).css("background-color", "none");
+            //}
+        }
+    </script>*@
+
+
+@*<script src="~/Scripts/task.js"></script>*@

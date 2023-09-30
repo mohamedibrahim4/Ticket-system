@@ -1,0 +1,259 @@
+﻿@model IEnumerable<Platform_Task__Management_System.Models.Branch>
+
+
+@{
+    ViewBag.Title = "Branches";
+}
+
+<h2>Branch</h2>
+
+
+<label>Total Branches:</label>  @ViewBag.numberbranches
+@*<table class="table table-dark table-bordered" data-replace="jtable" id="example" aria-label="JS Datatable" data-locale="en" data-search="true">*@
+
+    <table data-replace="jtable" id="BranchTable" class="table table-bordered" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">
+        @*<table class="table table-dark table-bordered" data-replace="jtable" id="example" aria-label="JS Datatable" data-locale="en" data-search="true">*@
+
+        <thead class="bg-danger text-center text-white">
+            <tr>
+                <th style="display:none;">ID</th>
+                <th>Branch Name </th>
+                <th>Operations </th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Create New
+    </button>
+
+    <!-- Modal for ADD BRANCH -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ِADD Branch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    @*<label>BranchID</label><br />*@
+
+                    <input type="hidden" id="BranchID" name="BranchID" class="form-control" /><br />
+                    <label>BranchName</label><br />
+                    <input type="text" id="BranchName" name="BranchName" class="form-control" /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="AddBranch" type="button" class="btn btn-primary">ADD Branch</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Edit BRANCH -->
+    <div class="modal fade" id="EditBRANCH" tabindex="-1" role="dialog" aria-labelledby="EditBRANCHLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ِEdit Branch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <input type="hidden" id="NewBranchID" name="NewBranchID" class="form-control" /><br />
+                    <label>BranchName</label><br />
+                    <input type="text" id="NewBranchName" name="NewBranchName" class="form-control" /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="UpdateBranch" type="button" class="btn btn-primary">Update Branch</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        //debugger;
+        GetAllBranches();
+
+        $("#AddBranch").click(function () {
+            var BranchName = $("#BranchName").val();
+            //var BranchID = $("#BranchID").val();
+
+            //debugger;
+            $.ajax({
+                url: "https://localhost:44343/Branches/CreateNewBranch",
+                type: "POST",
+
+
+                data: {
+                    //BranchID: BranchID,
+                    BranchName: BranchName
+
+                },
+                dataType: "json",
+                success: function (data) {
+                    swal("Done!", "It was succesfully Added!", "success");
+                    $('#exampleModal').modal('hide');
+                    GetAllBranches();
+                    console.log("success");
+                },
+                error: function (err) {
+                    swal("Error Added!", "Please try again", "error");
+
+                }
+
+            });
+
+
+        });//end of btnAddBranch click
+
+
+        function GetAllBranches() {
+            debugger;
+            $.ajax({
+                url: "https://localhost:44343/Branches/GetAllBranches",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    console.log(data);
+                    var res = JSON.parse(data);
+                    var userRole = '@(User.IsInRole("Manager") ? "inline-block" : "none")';
+                   
+
+                    var tbDetailsTable = $('#BranchTable tbody');
+                    tbDetailsTable.empty();
+                    $(res).each(function (index, res) {
+                        console.log(res);
+                        tbDetailsTable.append('<tr><td style="display:none;"> ' + res.BranchID + '</td > '
+                            + '<td>' + res.BranchName + '</td>'
+                            + '<td> <button style="display:' + userRole + ';" id=' + res.BranchID + ' onClick="GetBranchNameById(' + res.BranchID + ')" class="btn btn-outline-dark" data-toggle="modal" data-target="#EditBRANCH" >Edit</button>|<button style="display:' + userRole + ';"  data-model-id=' + res.BranchID + ' onClick="DeleteBilDeltials(' + res.BranchID + ')" class="btn btn-danger">Delete Branch</button> </td > ' +
+                            '</tr >');
+
+                    });
+
+
+
+                },
+
+
+                error: function (err) {
+                    alert(err);
+                }
+
+            });
+        }
+        //end of GetAllBranches click
+
+        function DeleteBilDeltials(BranchID) {
+            debugger;
+            $.ajax({
+                url: "https://localhost:44343/Branches/DeleteBrach/" + BranchID,
+                type: "GET",
+                dataType: "json",
+                success: function () {
+                    console.log("delete success");
+                    swal("Done!", "It was succesfully Deleted!", "success");
+
+                    GetAllBranches();
+
+
+
+                },
+
+
+                error: function (err) {
+                    alert(err);
+                    swal("Error Deleting!", "Please try again", "error");
+
+                }
+
+            });
+        }
+        //end of DeleteBilDeltials click
+        var BranchID;
+
+        function GetBranchNameById(BranchID) {
+            debugger;
+            BranchID = BranchID
+            $.ajax({
+                url: "https://localhost:44343/Branches/GetBranchNameById/" + BranchID,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    var res = JSON.parse(data);
+
+
+                    $("#NewBranchName").val(res.BranchName);
+                    $("#NewBranchID").val(res.BranchID);
+
+
+                },
+                error: function (err) {
+                    alert(err);
+                }
+
+            });
+        }
+        //end of DeleteBilDeltials click
+
+        $("#UpdateBranch").click(function () {
+
+
+            debugger;
+
+            var NewBranchID = $("#NewBranchID").val();
+            var NewBranchName = $("#NewBranchName").val();
+
+
+            $.ajax({
+                url: "https://localhost:44343/Branches/UpdateBranchNameById?id=" + NewBranchID + "&NewBranchName=" + NewBranchName,
+                type: "POST",
+                //data: {
+                //    BranchID: BranchID,
+                //    NewBranchName: NewBranchName
+
+                //},
+                dataType: "json",
+                success: function (data) {
+                    swal("Done!", "It was succesfully Updated!", "success");
+                    $('#EditBRANCH').modal('hide');
+
+                    GetAllBranches();
+                    console.log("Update success");
+
+
+
+                },
+                error: function (err) {
+                    alert(err);
+                    swal("Error Updating!", "Please try again", "error");
+
+                }
+
+            });
+
+
+        });//end of DeleteBilDeltials click
+
+
+
+
+    </script>
+
+
+

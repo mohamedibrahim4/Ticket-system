@@ -1,0 +1,98 @@
+﻿@model Platform_Task__Management_System.Models.Task
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.applicationUser.ProgramName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.applicationUser.ProgramName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.facility.FacilityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.facility.FacilityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.software.SoftwareName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.software.SoftwareName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskRequirements)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskRequirements)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeadLineDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeadLineDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilesPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilesPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TaskID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

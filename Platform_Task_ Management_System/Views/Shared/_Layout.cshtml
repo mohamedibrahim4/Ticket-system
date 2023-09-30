@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNet.Identity
+@using Platform_Task__Management_System.Models
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -Platform Tasks Management System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <link rel="icon" type="image/jpg" href="https://localhost:44343/Photos/fav.jpg" />
+    <link href="~/Photos/jquery-ui.css" rel="stylesheet" />
+    @*<link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>*@
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.TeamLeader))
+                    {
+
+
+                        <li>  @Html.ActionLink("Platform Tasks Management System", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Branches", "Index", "Branches")</li>
+                        <li>@Html.ActionLink("Softwares", "Index", "Softwares")</li>
+                        <li>@Html.ActionLink("Facilities", "Index", "Facilities")</li>
+                        <li>@Html.ActionLink("Tickets Total ", "IndexTotal", "Tickets")</li>
+
+                    }
+                    @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.TeamLeader) || User.IsInRole(RoleName.Programmer))
+                    {
+                        <li>@Html.ActionLink("Tasks", "Index", "Tasks")</li>
+                        <li>@Html.ActionLink("Tasks Total", "IndexTotal", "Tasks")</li>
+
+
+
+
+                    }
+
+                    @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.User) || User.IsInRole(RoleName.TeamLeader))
+                    {
+                        <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
+
+
+                    }
+
+                </ul>
+                <div class="product_list_header">
+                    <form action="" method="post" class="last">
+                        @*<input type="hidden" name="cmd" value="_cart">
+                <input type="hidden" name="display" value="1">*@
+                        @*<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="false"></i></button>*@
+
+                        @*cart*@
+
+
+                        <!--<button class="w3view-cart" type="button" data-toggle="modal" data-target="#cart" aria-hidden="false" style="margin-top:10px">
+                            <div style="background-color: #fe9126;color: snow;border-radius: 10px;"><span class="total-count"></span></div>-->
+                            @*<i class="far fa-bell" aria-hidden="false"></i>*@
+                            <!--<i class="fa fa-cart-arrow-down" aria-hidden="false"></i>
+                        </button>-->
+
+                        @*<button  class="text-danger clear-cart "  style="margin-top:20px">
+                    <i class="fa fa-trash-o " aria-hidden="false" style="font-size:1em"></i>
+                </button>*@
+
+
+                        @*<button type="button" class="fa fa-cart-arrow-down" data-toggle="modal" data-target="#cart" aria-hidden="false"> (<span style="color:black" class="total-count"></span>)</button>*@
+                        @*<button class="fa fa-trash-o  text-danger clear-cart " style="font-size:1em"></button>*@
+
+
+
+                    </form>
+                </div>
+
+                <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+
+
+                                <div style="text-align:right;">
+
+                                    <i class="fa fa-trash-o text-danger clear-cart" aria-hidden="false" style="font-size:2em"></i>
+
+                                </div>
+
+                                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                            </div>
+                            <div class="modal-body">
+                                <table class="show-cart table">
+                                </table>
+                                <div>Total price: $<span class="total-cart"></span></div>
+                            </div>
+                            <div class="modal-footer">
+                                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Order now</button>*@
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="orderNowBtn" data-dismiss="modal" class="btn btn-primary">Order Now</button>
+                                @Html.ActionLink("My Orders", "GetCustomerOrders", "AdminCart", null, new { @class = "btn btn-primary" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/sweetalert.js"></script>
+
+    <script src="~/Scripts/task.js"></script>
+    @*<script src="~/Scripts/jquery-ui-1.12.1.js"></script>*@
+
+    <script src="~/Photos/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('input[type=DateTime]').datepicker({
+                dateFormat: 'dd M yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10"
+            });
+        });
+    </script>
+    <script src="~/Scripts/locales.js"></script>
+    <script src="~/Scripts/datatable.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using Platform_Task__Management_System.Models
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>*@
+
+<div class="row">
+    @*<div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>*@
+    @if (User.IsInRole(RoleName.Manager))
+    {
+    <div class="about-sub-inner text-center mt-lg-4 mt-3">
+        <h1 style="font-weight:bold">
+            Platform Tasks Management System
+        </h1>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-truck"></span>
+                <h2 style="border: 1px solid black;">Total Branches</h2>
+                <p class="mt-3">
+                    <h3>  @ViewBag.numberbranches</h3>
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Softwares</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberSoftware</h3>
+
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-phone-volume"></span>
+                <h2 style="border: 1px solid black;">Total Facilities</h2>
+                <p class="mt-3">
+                    <h3>@ViewBag.numberFacility</h3>
+                </p>
+            </div>
+            @*</br>*@
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-phone-volume"></span>
+                <h2 style="border: 1px solid black;"> Facilities Supported</h2>
+                <p class="mt-3">
+                    <h3>@ViewBag.numberFacilitySupported</h3>
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-phone-volume"></span>
+                <h2 style="border: 1px solid black;">Facilities Not Supported</h2>
+                <p class="mt-3">
+                    <h3>@ViewBag.numberFacilityNotSupported</h3>
+                </p>
+            </div>
+
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Tasks</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTask</h3>
+
+                </p>
+            </div>
+            @*</br>*@
+
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task Complete</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskComplete</h3>
+
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task Pending</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskPending</h3>
+
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task InProgress</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskInProgress</h3>
+
+                </p>
+            </div>
+            @*</br>*@
+
+            <div class="col-lg-4 col-md-4 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task Canceled</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskCanceled</h3>
+
+                </p>
+            </div>
+            @*<div class="col-lg-12 col-md-12 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task By Eng Mostafa</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskByEngMostafa</h3>
+
+                </p>
+            </div>
+            <div class="col-lg-12 col-md-12 abut-gride" style="border: 1px solid black;">
+                <span class="fas fa-undo"></span>
+                <h2 style="border: 1px solid black;">Total Task By Eng Ramdan</h2>
+                <p class="mt-3">
+                    <h3> @ViewBag.numberTaskByRamdan</h3>
+
+                </p>
+            </div>*@
+        </div>
+
+        @{
+            foreach (var item in (Dictionary<string, int>)ViewData["dataa"])
+            {
+                
+                
+
+                <div class="col-lg-12 col-md-12 abut-gride" style="border: 1px solid black;">
+                    <span class="fas fa-undo"></span>
+                    <h2 style="border: 1px solid black;">Total Task By @item.Key.ToString()</h2>
+                    <p class="mt-3">
+                        <h3> @item.Value.ToString()</h3>
+
+                    </p>
+                </div>
+            }
+        }
+    </div>
+            }
+    </div>

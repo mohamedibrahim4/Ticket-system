@@ -1,0 +1,120 @@
+﻿@model Platform_Task__Management_System.Models.Facility
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Facility</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FacilityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FacilityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.licenseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.licenseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodeFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PPR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PPR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RAS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RAS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelephoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelephoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordServer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasswordServer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnyDeskID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnyDeskID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnyDeskPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnyDeskPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSupport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsSupport)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

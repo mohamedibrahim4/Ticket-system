@@ -1,0 +1,622 @@
+﻿@model IEnumerable<Platform_Task__Management_System.Models.Facility>
+
+@{
+    ViewBag.Title = "Facility";
+}
+
+<h2>Index</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.licenseNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodeFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ADT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PPR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OMP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RAS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelephoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PasswordServer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnyDeskID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnyDeskPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSupport)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.licenseNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeFile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ADT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PPR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OMP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordServer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnyDeskID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnyDeskPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSupport)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.FacilityID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.FacilityID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.FacilityID })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+<label>Total Facilities:</label>  @ViewBag.numberFacility </br>
+<button id="CreateNew" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Create New
+</button>
+@*<table id="FacilityTable" class="table table-bordered" style="margin-top:10px;">*@
+
+<table data-replace="jtable" id="FacilityTable" class="table table-hover" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">
+
+
+    @*<table data-replace="jtable" id="FacilityTable" class="table table-bordered" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">*@
+
+    <thead class="bg-danger text-center text-white">
+        <tr>
+            <th style="display:none;">
+                FacilityID
+            </th>
+            <th>Facility Name</th>
+            <th>licenseNumber</th>
+            <th>Code File</th>
+            <th>ADT</th>
+            <th>PPR</th>
+            <th>OMP</th>
+            <th>RAS</th>
+            <th>TelephoneNumber</th>
+            <th>PasswordServer</th>
+            <th>AnyDeskID</th>
+            <th>AnyDeskPassword</th>
+            <th>IsSupport</th>
+            <th>Comments</th>
+
+            <th>Branch Name </th>
+            <th>Operations </th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<!-- Modal for ADD BRANCH -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ِADD Branch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <input type="hidden" id="FacilityID" name="FacilityID" class="form-control" /><br />
+                <label>FacilityName</label><br />
+                <input type="text" id="FacilityName" name="FacilityName" class="form-control" /><br />
+
+                <label>licenseNumber</label><br />
+                <input type="text" id="licenseNumber" name="licenseNumber" class="form-control" /><br />
+
+                <label>CodeFile</label><br />
+                <input type="text" id="CodeFile" name="CodeFile" class="form-control" /><br />
+
+                <label>ADT</label><br />
+                <input type="number" id="ADT" name="ADT" class="form-control" /><br />
+
+                <label>PPR</label><br />
+                <input type="number" id="PPR" name="PPR" class="form-control" /><br />
+
+                <label>OMP</label><br />
+                <input type="number" id="OMP" name="OMP" class="form-control" /><br />
+
+                <label>RAS</label><br />
+                <input type="number" id="RAS" name="RAS" class="form-control" /><br />
+
+                <label>TelephoneNumber</label><br />
+                <input type="text" id="TelephoneNumber" name="TelephoneNumber" class="form-control" /><br />
+
+                <label>PasswordServer</label><br />
+                <input type="text" id="PasswordServer" name="PasswordServer" class="form-control" /><br />
+
+                <label>AnyDeskID</label><br />
+                <input type="text" id="AnyDeskID" name="AnyDeskID" class="form-control" /><br />
+
+                <label>AnyDeskPassword</label><br />
+                <input type="text" id="AnyDeskPassword" name="AnyDeskPassword" class="form-control" /><br />
+
+                <label>IsSupport</label><br />
+                <input type="checkbox" id="IsSupport" name="IsSupport" class="form-control" /><br />
+                <label>Comment</label><br />
+                <input type="text" id="Comment" name="Comment" class="form-control" /><br />
+                <label>Branch Name</label><br />
+
+                <div class="input-group">
+                    <select id="branch" name="branch" data-placeholder="Select" class="form-control chosen-select" style="width:350px;" tabindex="2">
+                        @*<option value="ajaxData">
+                            </option>*@
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="AddFacility" type="button" class="btn btn-primary">Add Facility</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Edit BRANCH -->
+<div class="modal fade" id="EditFacility" tabindex="-1" role="dialog" aria-labelledby="EditFacilityLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ِEdit Branch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <input type="hidden" id="NewFacilityID" name="NewFacilityID" class="form-control" /><br />
+                <label>FacilityName</label><br />
+                <input type="text" id="NewFacilityName" name="NewFacilityName" class="form-control" /><br />
+                <label>licenseNumber</label><br />
+                <input type="text" id="NewlicenseNumber" name="NewlicenseNumber" class="form-control" /><br />
+
+                <label>CodeFile</label><br />
+                <input type="text" id="NewCodeFile" name="NewCodeFile" class="form-control" /><br />
+
+                <label>ADT</label><br />
+                <input type="number" id="NewADT" name="NewADT" class="form-control" /><br />
+
+                <label>PPR</label><br />
+                <input type="number" id="NewPPR" name="NewPPR" class="form-control" /><br />
+
+                <label>OMP</label><br />
+                <input type="number" id="NewOMP" name="NewOMP" class="form-control" /><br />
+
+                <label>RAS</label><br />
+                <input type="number" id="NewRAS" name="NewRAS" class="form-control" /><br />
+
+                <label>TelephoneNumber</label><br />
+                <input type="text" id="NewTelephoneNumber" name="NewTelephoneNumber" class="form-control" /><br />
+
+                <label>PasswordServer</label><br />
+                <input type="text" id="NewPasswordServer" name="NewPasswordServer" class="form-control" /><br />
+
+                <label>AnyDeskID</label><br />
+                <input type="text" id="NewAnyDeskID" name="NewAnyDeskID" class="form-control" /><br />
+
+                <label>AnyDeskPassword</label><br />
+                <input type="text" id="NewAnyDeskPassword" name="NewAnyDeskPassword" class="form-control" /><br />
+
+                <label>IsSupport</label><br />
+                <input type="checkbox" id="NewIsSupport" name="NewIsSupport" class="form-control" /><br />
+
+                <label>Comment</label><br />
+                <input type="text" id="NewComment" name="NewComment" class="form-control" /><br />
+
+                <label>Branch Name</label><br />
+
+                <div class="input-group">
+                    <select id="Newbranch" name="Newbranch" data-placeholder="Select" class="form-control chosen-select" style="width:350px;" tabindex="2">
+                        @*<option value="ajaxData">
+                            </option>*@
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="UpdateFacility" type="button" class="btn btn-primary">Update Facility</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/locales.js"></script>
+<script src="~/Scripts/datatable.js"></script>
+<script>
+    GetAllFacilities();
+    function GetBranchesDropdown() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44343/Facilities/getBranchesDropdown",
+            success: function (data) {
+                console.log("branches", data);
+                var res = JSON.parse(data);
+
+
+                $('#branch').empty();
+                for (var i = 0; i < res.length; i++) {
+
+                    $('#branch').append('<option value="' + res[i].BranchID + '">' + res[i].BranchName + '</option>');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+
+    }
+    function GetUpdatedBranchesDropdown() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44343/Facilities/getBranchesDropdown",
+            success: function (data) {
+                console.log("branches", data);
+                var res = JSON.parse(data);
+
+
+                $('#Newbranch').empty();
+                for (var i = 0; i < res.length; i++) {
+
+                    $('#Newbranch').append('<option value="' + res[i].BranchID + '">' + res[i].BranchName + '</option>');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+
+    }
+
+    $("#CreateNew").click(function () {
+
+        //$.ajax({
+        //    type: 'GET',
+        //    dataType: 'json',
+        //    url: "https://localhost:44343/Facilities/getBranchesDropdown",
+        //    success: function (data) {
+        //        console.log(data);
+
+        //        $('#branch').empty();
+        //        for (var i = 0; i < data.length; i++) {
+
+        //            $('#branch').append('<option value="'+ data[i].BranchID+'">' + data[i].BranchName + '</option>');
+        //        }
+        //    },
+        //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //        alert(textStatus);
+        //    }
+        //});
+
+        GetBranchesDropdown();
+
+    });//end of btnAddBranch click
+    $("#AddFacility").click(function () {
+        var FacilityName = $("#FacilityName").val();
+        var licenseNumber = $("#licenseNumber").val();
+        var CodeFile = $("#CodeFile").val();
+        var ADT = $("#ADT").val();
+        var PPR = $("#PPR").val();
+        var OMP = $("#OMP").val();
+        var RAS = $("#RAS").val();
+        var TelephoneNumber = $("#TelephoneNumber").val();
+        var PasswordServer = $("#PasswordServer").val();
+        var AnyDeskID = $("#AnyDeskID").val();
+        var AnyDeskPassword = $("#AnyDeskPassword").val();
+        //var IsSupport = $("#IsSupport").val();
+        var IsSupport = document.getElementById('IsSupport').checked
+        var Comment = $("#Comment").val();
+        var BranchID = $("#branch").val();
+        var branchName = $("#branch option:selected").text();
+
+        var branch = { BranchID: BranchID, BranchName: branchName }
+        var model = {
+            FacilityName: FacilityName,
+            licenseNumber: licenseNumber,
+            CodeFile: CodeFile,
+            ADT: ADT,
+            PPR: PPR,
+            OMP: OMP,
+            RAS: RAS,
+            TelephoneNumber: TelephoneNumber,
+            PasswordServer: PasswordServer,
+            AnyDeskID: AnyDeskID,
+            AnyDeskPassword: AnyDeskPassword,
+            IsSupport: document.getElementById('IsSupport').checked,
+            Comment: Comment,
+            BranchID: BranchID
+
+
+        }
+        console.log(model);
+
+
+        $.ajax({
+
+            url: "https://localhost:44343/Facilities/CreateNewFacility",
+            type: "POST",
+
+            data: {
+                FacilityName: FacilityName,
+                licenseNumber: licenseNumber,
+                CodeFile: CodeFile,
+                ADT: ADT,
+                PPR: PPR,
+                OMP: OMP,
+                RAS: RAS,
+                TelephoneNumber: TelephoneNumber,
+                PasswordServer: PasswordServer,
+                AnyDeskID: AnyDeskID,
+                AnyDeskPassword: AnyDeskPassword,
+                IsSupport: document.getElementById('IsSupport').checked,
+                Comment: Comment,
+                BranchID: BranchID
+            },
+            dataType: "json",
+            success: function (data) {
+                swal("Done!", "It was succesfully Added!", "success");
+                $('#exampleModal').modal('hide');
+                GetAllFacilities();
+                console.log("success");
+            },
+            error: function (err) {
+                swal("Error Added!", "Please try again", "error");
+
+            }
+
+        });
+
+
+    });//end of btnAddBranch click
+
+
+    function GetAllFacilities() {
+        debugger;
+
+        $.ajax({
+            url: "https://localhost:44343/Facilities/GetAllFacilities",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                var res = JSON.parse(data);
+                console.log(res);
+
+                console.log(res.FacilityID);
+
+                //console.log(data);
+                var tbDetailsTable = $('#FacilityTable tbody');
+                tbDetailsTable.empty();
+                $(res).each(function (index, res) {
+                    console.log(res);
+                    console.log(res["FacilityID"]);
+
+
+
+                    tbDetailsTable.append('<tr><td style="display:none;"> ' + res.FacilityID + '</td> ' +
+                        '<td>' + res.FacilityName + '</td>' +
+                        '<td>' + res.licenseNumber + '</td>' +
+                        '<td>' + res.CodeFile + '</td>' +
+                        '<td>' + res.ADT + '</td>' +
+                        '<td>' + res.PPR + '</td>' +
+                        '<td>' + res.OMP + '</td>' +
+                        '<td>' + res.RAS + '</td>' +
+                        '<td>' + res.TelephoneNumber + '</td>' +
+                        '<td>' + res.PasswordServer + '</td>' +
+                        '<td>' + res.AnyDeskID + '</td>' +
+                        '<td>' + res.AnyDeskPassword + '</td>' +
+                        '<td>' + res.IsSupport + '</td>' +
+                        '<td>' + res.Comment + '</td>'
+                        +
+                        '<td>' + res.branch.BranchName + '</td>'
+                        + '<td> <button id=' + res.FacilityID + ' onClick="GetFacilityById(' + res.FacilityID + ')" class="btn btn-outline-dark" data-toggle="modal" data-target="#EditFacility" >Edit</button>|<button  data-model-id=' + res.FacilityID + ' onClick="DeletFacilityDeltails(' + res.FacilityID + ')" class="btn btn-danger">Delete Branch</button> </td > ' +
+                        '</tr>');
+
+                });
+
+
+
+            },
+
+
+            error: function (err) {
+                console.log("GetAllFacilities failed");
+
+                //alert(err);
+            }
+
+        });
+    }
+
+    function DeletFacilityDeltails(FacilityID) {
+        debugger;
+        $.ajax({
+            url: "https://localhost:44343/Facilities/DeletFacilityDeltails/" + FacilityID,
+            type: "GET",
+            dataType: "json",
+            success: function () {
+                console.log("delete success");
+                swal("Done!", "It was succesfully Deleted!", "success");
+
+                GetAllFacilities();
+
+
+
+            },
+
+
+            error: function (err) {
+                alert(err);
+                swal("Error Deleting!", "Please try again", "error");
+
+            }
+
+        });
+    }
+    //end of DeleteBilDeltials click
+    var FacilityID;
+
+    function GetFacilityById(FacilityID) {
+        debugger;
+        FacilityID = FacilityID
+        $.ajax({
+            url: "https://localhost:44343/Facilities/GetFacilityNameById/" + FacilityID,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var res = JSON.parse(data);
+                console.log("dta", res);
+                GetUpdatedBranchesDropdown();
+                $("#NewFacilityID").val(res.FacilityID);
+                $("#NewFacilityName").val(res.FacilityName);
+                $("#NewlicenseNumber").val(res.licenseNumber);
+                $("#NewCodeFile").val(res.CodeFile);
+                $("#NewADT").val(res.ADT);
+                $("#NewPPR").val(res.PPR);
+                $("#NewOMP").val(res.OMP);
+                $("#NewRAS").val(res.RAS);
+                $("#NewTelephoneNumber").val(res.TelephoneNumber);
+                $("#NewPasswordServer").val(res.PasswordServer);
+                $("#NewAnyDeskID").val(res.AnyDeskID);
+                $("#NewAnyDeskPassword").val(res.AnyDeskPassword);
+                $("#NewIsSupport").val(res.IsSupport);
+                $("#NewComment").val(res.Comment);
+
+                $("#Newbranch").val(res.BranchID);
+
+
+
+
+
+            },
+            error: function (err) {
+                alert(err);
+            }
+
+        });
+    }
+    //end of DeleteBilDeltials click
+
+    $("#UpdateFacility").click(function () {
+
+
+
+        var NewFacilityID = $("#NewFacilityID").val();
+        var NewFacilityName = $("#NewFacilityName").val();
+        var NewlicenseNumber = $("#NewlicenseNumber").val();
+        var NewCodeFile = $("#NewCodeFile").val();
+        var NewADT = $("#NewADT").val();
+        var NewPPR = $("#NewPPR").val();
+        var NewOMP = $("#NewOMP").val();
+        var NewRAS = $("#NewRAS").val();
+        var NewTelephoneNumber = $("#NewTelephoneNumber").val();
+        var NewPasswordServer = $("#NewPasswordServer").val();
+        var NewAnyDeskID = $("#NewAnyDeskID").val();
+        var NewAnyDeskPassword = $("#NewAnyDeskPassword").val();
+        var NewIsSupport = document.getElementById('NewIsSupport').checked;
+        var NewComment = $("#NewComment").val();
+        var Newbranch = $("#Newbranch").val();
+
+
+
+
+
+        $.ajax({
+            url: "https://localhost:44343/Facilities/UpdateFacilityDetailById?id=" + NewFacilityID + "&NewFacilityName=" + NewFacilityName
+                + "&NewlicenseNumber=" + NewlicenseNumber + "&NewCodeFile=" + NewCodeFile + "&NewADT=" + NewADT + "&NewPPR=" + NewPPR
+                + "&NewOMP=" + NewOMP + "&NewRAS=" + NewRAS + "&NewTelephoneNumber=" + NewTelephoneNumber + "&NewPasswordServer=" + NewPasswordServer
+                + "&NewAnyDeskID=" + NewAnyDeskID + "&NewAnyDeskPassword=" + NewAnyDeskPassword + "&NewIsSupport=" + NewIsSupport + "&NewComment=" + NewComment + "&NewBranchID=" + Newbranch,
+            type: "POST",
+            //data: {
+            //    BranchID: BranchID,
+            //    NewBranchName: NewBranchName
+
+            //},
+            dataType: "json",
+            success: function (data) {
+                swal("Done!", "It was succesfully Updated!", "success");
+                $('#EditFacility').modal('hide');
+
+                GetAllFacilities();
+                console.log("Update success");
+
+
+
+            },
+            error: function (err) {
+                alert(err);
+                swal("Error Updating!", "Please try again", "error");
+
+            }
+
+        });
+
+
+    });//end of DeleteBilDeltials click
+
+
+
+
+</script>
+<script src="~/Scripts/locales.js"></script>
+<script src="~/Scripts/datatable.js"></script>
+

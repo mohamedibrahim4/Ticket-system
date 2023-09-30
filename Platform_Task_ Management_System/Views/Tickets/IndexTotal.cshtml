@@ -1,0 +1,227 @@
+﻿@model IEnumerable<Platform_Task__Management_System.Models.Ticket>
+@using Microsoft.AspNet.Identity
+@using Platform_Task__Management_System.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<label>Total Tickets:</label>  @ViewBag.numberTicket</br>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@*<table class="table">*@
+<table data-replace="jtable" id="TicketTable" class="table table-hover" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">
+    <thead>
+
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.applicationUser.ProgramName)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.facility.FacilityName)
+                </th>*@
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.software.SoftwareName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clinkCenter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+
+            <th>
+                @*@Html.DisplayNameFor(model => model.pathAndContents)*@
+                Attachement Files
+            </th>
+            <!--<th>-->
+            @*@Html.DisplayNameFor(model => model.pathAndContents)*@
+            <!--Contents
+            </th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.uRGENCY)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr style="background-color:Red">
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.applicationUser.ProgramName)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.facility.FacilityName)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.software.SoftwareName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.clinkCenter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td style="max-width:100px;">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.FilePath)*@
+                    @*@foreach (var c in item.pathAndContents=new List<Platform_Task__Management_System.Models.PathAndContent>())
+                        {
+                            @Html.DisplayFor(modelItem => c.FilePath)
+
+                        }*@
+                    @*<img height="150"width="150" src="@ViewBag.NewFilesPath)" asp-append-version="true" />*@
+                    @{
+                        string s = item.FilePath;
+                        if (s != null)
+                        {
+                            string[] separators = new string[] { "!!!" };
+
+                            string[] subs = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                            foreach (var sub in subs)
+                            {
+                                <a href="~/Tickets/DownloadFile?filePath=@sub">DownLoad</a>
+
+                            }
+
+                        }
+                        else
+                        {
+                            <h1>NO DATA</h1>
+                        }
+
+
+
+                    }
+                    @*@for (int i = 0; i < item.FilePath.; i++)
+                        {
+
+                        }*@
+                </td>
+
+
+
+                <!--<td>
+                @Html.DisplayFor(modelItem => item.ContentType)-->
+                @*@foreach (var c in item.pathAndContents = new List<Platform_Task__Management_System.Models.PathAndContent>())
+                    {
+                        @Html.DisplayFor(modelItem => c.ContentType)
+
+                    }*@
+                <!--</td>-->
+                @{
+                    string color = "";
+                    if (item.status.Equals("Complete"))
+                    {
+                        color = "green";
+                    }
+                    else if (item.status.Equals("Pending"))
+                    {
+                        color = "green";
+                    }
+
+
+                    else if (item.status.Equals("InProgress"))
+                    {
+                        color = "blue";
+
+                    }
+                    else if (item.status.Equals("Canceled"))
+                    {
+                        color = "yellow";
+
+                    }
+                }
+                <td bgcolor=@color>
+
+
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+
+
+                    @Html.DisplayFor(modelItem => item.uRGENCY)
+                </td>
+                <td>
+                    @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.TeamLeader))
+                    {
+                       @Html.ActionLink("Edit Ticket", "Edit", new { @class = "btn btn-primary", id = item.TicketID, status = item.status })
+                @*<input type="button" class="btn btn-primary" id="@item.TicketID" value="Edit" value="Create" onclick="location.href='@Url.Action("Edit", "Tickets")'" />*@
+                <button onClick="DeleteTicket(' + @item.TicketID + ')" class="btn btn-danger"> Delete Ticket</button>
+
+
+            }
+
+            @*@Html.ActionLink("Edit Ticket", "Edit", new { @class = "btn btn-primary", id = item.TicketID, status = item.status }) | *@
+
+                        @*< button onClick = "DeleteTicket(' + @item.TicketID + ')" class="btn btn-danger"> Delete Ticket</button>*@
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    function DeleteTicket(TicketID) {
+        $.ajax({
+            url: "https://localhost:44343/Tickets/DeleteTicket?id=" + TicketID,
+            type: "GET",
+            dataType: "json",
+            success: function () {
+                console.log("delete success");
+                window.location.href = "https://localhost:44343/Tickets/Index"
+
+
+                setTimeout(swal("Done!", "It was succesfully Deleted!", "success"), 500);
+
+            },
+
+
+            error: function (err) {
+                alert(err);
+                swal("Error Deleting!", "Please try again", "error");
+
+            }
+
+        });
+    }
+
+</script>
+
+
+@*<script src="~/Scripts/task.js"></script>*@

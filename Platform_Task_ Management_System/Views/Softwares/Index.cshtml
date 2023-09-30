@@ -1,0 +1,257 @@
+﻿@model IEnumerable<Platform_Task__Management_System.Models.Software>
+
+@{
+    ViewBag.Title = "Software";
+}
+
+<h2>Software</h2>
+
+
+<label>Total Softwares:</label>  @ViewBag.numberSoftwares
+@*<table id="SoftwareTable" class="table table-bordered" style="margin-top:10px;">*@
+    <table data-replace="jtable" id="SoftwareTable" class="table table-bordered" aria-label="JS Datatable" data-locale="en" data-search="true" style="margin-top:10px;">
+
+        <thead class="bg-danger text-center text-white">
+            <tr>
+                <th style="display:none;">ID</th>
+                <th>Software Name </th>
+                <th>Operations </th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Create New
+    </button>
+
+    <!-- Modal for ADD SoftwareName -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ِADD Software</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <input type="hidden" id="SoftwareID" name="SoftwareID" class="form-control" /><br />
+                    <label>SoftwareName</label><br />
+                    <input type="text" id="SoftwareName" name="SoftwareName" class="form-control" /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="AddSoftware" type="button" class="btn btn-primary">ADD Software</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Edit BRANCH -->
+    <div class="modal fade" id="EditSoftware" tabindex="-1" role="dialog" aria-labelledby="EditSoftwareLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ِEdit Branch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <input type="hidden" id="NewSoftwareID" name="NewSoftwareID" class="form-control" /><br />
+                    <label>SoftwareName</label><br />
+                    <input type="text" id="NewSoftwareName" name="NewSoftwareName" class="form-control" /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="UpdateSoftware" type="button" class="btn btn-primary">Update Software</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        //debugger;
+        GetAllSoftwares();
+
+        $("#AddSoftware").click(function () {
+            var SoftwareName = $("#SoftwareName").val();
+            //debugger;
+            //swal({
+            //    title: "Are you sure?",
+            //    text: "You will not be able to recover this imaginary file!",
+            //    type: "warning",
+            //    showCancelButton: true,
+            //    confirmButtonColor: "#DD6B55",
+            //    confirmButtonText: "Yes, ADD it!",
+            //    closeOnConfirm: false
+
+            //}),
+            $.ajax({
+                url: "https://localhost:44343/Softwares/CreateNewSoftware",
+                type: "POST",
+
+                data: {
+                    SoftwareName: SoftwareName
+                },
+                dataType: "json",
+                success: function (data) {
+                    swal("Done!", "It was succesfully Added!", "success");
+                    $('#exampleModal').modal('hide');
+                    GetAllSoftwares();
+                    console.log("success");
+                },
+                error: function (err) {
+                    swal("Error Added!", "Please try again", "error");
+
+                }
+
+            });
+
+
+        });//end of AddSoftware click
+
+
+        function GetAllSoftwares() {
+            $.ajax({
+                url: "https://localhost:44343/Softwares/GetAllSoftwares",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    //debugger;
+                    console.log(data);
+                    var res = JSON.parse(data);
+
+                    var tbDetailsTable = $('#SoftwareTable tbody');
+                    tbDetailsTable.empty();
+                    $(res).each(function (index, res) {
+                        console.log(data);
+                        tbDetailsTable.append('<tr><td style="display:none;"> ' + res.SoftwareID + '</td > ' 
+                            +'<td>' + res.SoftwareName + '</td>'
+                            + '<td> <button id=' + res.SoftwareID + ' onClick="GetSoftwareNameById(' + res.SoftwareID + ')" class="btn btn-outline-dark" data-toggle="modal" data-target="#EditSoftware" >Edit</button>|<button  data-model-id=' + res.SoftwareID + ' onClick="DeleteSoftwareDeltials(' + res.SoftwareID + ')" class="btn btn-danger">Delete Software</button> </td > ' +
+                            '</tr >');
+
+                    });
+
+
+
+                },
+
+
+                error: function (err) {
+                    alert(err);
+                }
+
+            });
+        }
+        //end of GetAllBranches click
+
+        function DeleteSoftwareDeltials(SoftwareID) {
+            debugger;
+            $.ajax({
+                url: "https://localhost:44343/Softwares/DeleteSoftware/" + SoftwareID,
+                type: "GET",
+                dataType: "json",
+                success: function () {
+                    console.log("delete success");
+                    swal("Done!", "It was succesfully Deleted!", "success");
+
+                    GetAllSoftwares();
+
+
+
+                },
+
+
+                error: function (err) {
+                    alert(err);
+                    swal("Error Deleting!", "Please try again", "error");
+
+                }
+
+            });
+        }
+        //end of DeleteBilDeltials click
+        var SoftwareID;
+
+        function GetSoftwareNameById(SoftwareID) {
+            debugger;
+            SoftwareID = SoftwareID
+            $.ajax({
+                url: "https://localhost:44343/Softwares/GetSoftwareNameById/" + SoftwareID,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    var res = JSON.parse(data);
+
+
+                    $("#NewSoftwareName").val(res.SoftwareName);
+                    $("#NewSoftwareID").val(res.SoftwareID);
+
+
+                },
+                error: function (err) {
+                    alert(err);
+                }
+
+            });
+        }
+        //end of GetBranchNameById click
+
+        $("#UpdateSoftware").click(function () {
+
+
+            debugger;
+
+            var NewSoftwareID = $("#NewSoftwareID").val();
+            var NewSoftwareName = $("#NewSoftwareName").val();
+
+
+            $.ajax({
+                url: "https://localhost:44343/Softwares/UpdatSoftwareNameById?id=" + NewSoftwareID + "&NewSoftwareName=" + NewSoftwareName,
+                type: "POST",
+                //data: {
+                //    BranchID: BranchID,
+                //    NewBranchName: NewBranchName
+
+                //},
+                dataType: "json",
+                success: function (data) {
+                    swal("Done!", "It was succesfully Updated!", "success");
+                    $('#EditSoftware').modal('hide');
+
+                    GetAllSoftwares();
+                    console.log("Update success");
+
+
+
+                },
+                error: function (err) {
+                    alert(err);
+                    swal("Error Updating!", "Please try again", "error");
+
+                }
+
+            });
+
+
+        });//end of UpdateSoftware click
+
+
+
+
+    </script>
+
+
+
